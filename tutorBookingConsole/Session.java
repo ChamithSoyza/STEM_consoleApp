@@ -1,7 +1,7 @@
 package tutorBookingConsole;
 
 public abstract class Session {
-    private Integer sessionId;
+    private int sessionId;
     private Student student;
     private Mentor mentor;
     private String dateTime;
@@ -14,7 +14,7 @@ public abstract class Session {
         this.dateTime = dateTime;
     }
 
-    public Integer getSessionId() {
+    public int getSessionId() {
         return sessionId;
     }
 

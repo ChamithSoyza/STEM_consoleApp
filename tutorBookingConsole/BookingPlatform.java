@@ -34,7 +34,7 @@ public class BookingPlatform {
 
                 Student student = new Student(name, stream);
                 students.add(student);
-                userMap.put(student.getId(), student);
+                userMap.put(Integer.valueOf(student.getId()), student);
                 System.out.println("New Student Registered. ID: " + student.getId() + " | " + student.getName());
             } else if (input.equals("2")) {
                 System.out.println("Enter Mentor's Name: ");
@@ -44,7 +44,7 @@ public class BookingPlatform {
 
                 Mentor mentor = new Mentor(name, subject);
                 mentors.add(mentor);
-                userMap.put(mentor.getId(), mentor);
+                userMap.put(Integer.valueOf(mentor.getId()), mentor);
                 System.out.println("New Mentor Registered. ID: " + mentor.getId() + " | " + mentor.getName());
             }
             else if(input.equals("3")){{
