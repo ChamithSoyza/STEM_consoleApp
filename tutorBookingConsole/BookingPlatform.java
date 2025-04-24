@@ -67,6 +67,17 @@ public class BookingPlatform {
                     }
                 }
             }
+            else if(input.equals("5")){
+                System.out.println("Enter Student's ID: ");
+                int studentId = Integer.parseInt(sc.nextLine());
+                System.out.println("Enter Mentor's ID :");
+                int mentorId  = Integer.parseInt(sc.nextLine());
+
+                if(!userMap.containsKey(studentId) || !(userMap.get(studentId) instanceof Student)){
+                    System.out.println("Student ID does not exist");
+                    continue;
+                }
+            }
         }
     }
 }
