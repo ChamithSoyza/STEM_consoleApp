@@ -1,6 +1,6 @@
 package tutorBookingConsole;
 
-public class Student extends User {
+public class Student extends User implements Notifiable {
     private String stream;
 
     public Student(String name, String stream) {
@@ -20,5 +20,10 @@ public class Student extends User {
     @Override
     public String toString() {
         return super.toString() + " : Student [stream=" + stream + "]";
+    }
+
+    @Override
+    public void notify(String msg) {
+        System.out.println("Notification for Student: Dear " + getName() + " : " + msg);
     }
 }

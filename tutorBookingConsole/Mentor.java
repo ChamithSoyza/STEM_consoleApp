@@ -1,6 +1,6 @@
 package tutorBookingConsole;
 
-public class Mentor extends User {
+public class Mentor extends User implements Notifiable {
     private String department;
 
     public Mentor(String name, String department) {
@@ -20,5 +20,10 @@ public class Mentor extends User {
     @Override
     public String toString() {
         return super.toString() + " : Mentor experienced in" + department + "]";
+    }
+
+    @Override
+    public void notify(String msg) {
+        System.out.println("Notification for Mentor : Dear " + getName() + " : " + msg);
     }
 }
