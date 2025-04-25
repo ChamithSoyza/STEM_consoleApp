@@ -46,38 +46,111 @@ public class BookingPlatform {
                 mentors.add(mentor);
                 userMap.put(Integer.valueOf(mentor.getId()), mentor);
                 System.out.println("New Mentor Registered. ID: " + mentor.getId() + " | " + mentor.getName());
-            }
-            else if(input.equals("3")){{
-                if(students.isEmpty()){
-                    System.out.println("No Students Registered");
-                }else{
-                    System.out.println("Registered Students");
-                    for(Student student: students){
-                        System.out.println("- " + student.getName());
+            } else if (input.equals("3")) {
+                {
+                    if (students.isEmpty()) {
+                        System.out.println("No Students Registered");
+                    } else {
+                        System.out.println("Registered Students");
+                        for (Student student : students) {
+                            System.out.println("- " + student.getName());
+                        }
                     }
                 }
-            }}
-            else if(input.equals("4")){
-                if(mentors.isEmpty()){
+            } else if (input.equals("4")) {
+                if (mentors.isEmpty()) {
                     System.out.println("No Mentors Registered");
-                }else{
+                } else {
                     System.out.println("Registered Mentors");
-                    for(Mentor mentor: mentors){
+                    for (Mentor mentor : mentors) {
                         System.out.println("- " + mentor.getName());
                     }
                 }
-            }
-            else if(input.equals("5")){
+            } else if (input.equals("5")) {
                 System.out.println("Enter Student's ID: ");
                 int studentId = Integer.parseInt(sc.nextLine());
                 System.out.println("Enter Mentor's ID :");
-                int mentorId  = Integer.parseInt(sc.nextLine());
+                int mentorId = Integer.parseInt(sc.nextLine());
 
-                if(!userMap.containsKey(studentId) || !(userMap.get(studentId) instanceof Student)){
-                    System.out.println("Student ID does not exist");
+                if (!userMap.containsKey(studentId) || !(userMap.get(studentId) instanceof Student)) {
+                    System.out.println("Student ID does not exists");
                     continue;
                 }
+                if (!userMap.containsKey(mentorId) || !(userMap.get(mentorId) instanceof Mentor)) {
+                    System.out.println("Mentor ID does not exists");
+                }
+
+                Student student = (Student) userMap.get(studentId);
+                Mentor mentor = (Mentor) userMap.get(mentorId);
+
+                System.out.println("Please Select a Session Type :");
+                System.out.println("1. Subject 1 to 1");
+                System.out.println("2. Career Coaching");
+                String sessionType = sc.nextLine();
+
+                Session session = null;
+
+                if (sessionType.equals("1")) {
+                    System.out.println("Please Enter Subject : ");
+                    String subject = sc.nextLine();
+                    System.out.println("Please Enter a Date :");
+                    String date = sc.nextLine();
+                    session = new SubjectSession(student, mentor, date, subject);
+                } else if (sessionType.equals("2")) {
+                    System.out.println("Please Enter Topic : ");
+                    String topic = sc.nextLine();
+                    System.out.println("Please Enter a Date : ");
+                    String date = sc.nextLine();
+                    session = new CareerSession(student, mentor, date, topic);
+                } else {
+                    System.out.println("Invalid Session Selection");
+                }
+
+                sessions.add(session);
+
+                student.notify(" Please note that, New session with ID : " + session.getSessionId() + " booked on, " + session.getDateTime());
+                mentor.notify("Please note that, New session with ID : " + session.getSessionId() + "booked on, " + session.getDateTime());
+
+                System.out.println("New Session Booked Successfully!");
+                System.out.println(session.getDetails());
+            } else if (input.equals("6")) {
+                if (sessions.isEmpty()) {
+                    System.out.println("No Sessions Created");
+                } else {
+                    System.out.println("Created Sessions");
+                    for (Session session : sessions) {
+                        System.out.println("Session Details : " + session);
+                    }
+                }
+            } else if(input.equals("7")){
+                System.out.println("Please Enter The Session ID to Cancel : ");
+                String sessionIdToCancel = sc.nextLine();
+
+                Session sessionToCancel = null;
+                for (Session session: sessions){
+                    if(session.getSessionId() == Integer.parseInt(sessionIdToCancel)){
+                        sessionToCancel = session;
+                        break;
+                    }
+                }
+
+                if(sessionToCancel == null){
+                    System.out.println("No Session Found With This ID : " + sessionIdToCancel);
+                    continue;
+                }
+
+                sessions.remove(sessionToCancel);
+                sessionToCancel.getStudent().notify(" Your Session (ID : " + sessionIdToCancel + ") has been cancelled.");
+                sessionToCancel.getMentor().notify(" Please Note Session (ID : " + sessionIdToCancel + ") with Student " + sessionToCancel.getStudent().getName() + "has been cancelled");
+
+                System.out.println("Session Cancelled Successfully!");
+            } else if (input.equals("8")) {
+                System.out.println("Leaving Console...");
+                running = false;
+            }else{
+                System.out.println("Invalid Option, Please Enter a Value From 1 - 8");
             }
         }
+        sc.close();
     }
 }
